@@ -1,14 +1,8 @@
 <template>
   <div class="container">
     <br>
-    <form @submit.prevent="addTodo">
-      <div class="input-group">
-        <input v-model="newTodo" class="form-control" placeholder="What are you doing...">
-        <div class="input-group-btn">
-          <button class="btn btn-warning">Go!</button>
-        </div>
-      </div>
-    </form>
+
+    <add-todo @addTodo="addTodo" />
 
     <br>
 
@@ -36,13 +30,12 @@
 </template>
 
 <script>
+  import AddTodo from './AddTodo'
   import Todo from './Todo'
 
   export default {
     data () {
       return {
-        newTodo: '',
-
         todos: [
           { description: 'Drink a beer', done: true },
           { description: 'Learn VueJS', done: false },
@@ -76,17 +69,15 @@
         todo.done = !todo.done
       },
 
-      addTodo () {
-        if (!this.newTodo) {
+      addTodo (newTodo) {
+        if (!newTodo) {
           return
         }
 
         this.todos.push({
-          description: this.newTodo,
+          description: newTodo,
           done: false
         })
-
-        this.newTodo = ''
       },
 
       toggle (todo) {
@@ -95,7 +86,8 @@
     },
 
     components: {
-      Todo
+      Todo,
+      AddTodo
     }
   }
 </script>
