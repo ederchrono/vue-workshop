@@ -1,9 +1,9 @@
 <template>
-  <div>
-
+  <div class="container">
+    <br>
     <h3>Todo App</h3>
 
-    <form v-on:submit.prevent="addTodo">
+    <form @submit.prevent="addTodo">
       <div class="input-group">
         <input
           v-model="newTodo"
@@ -11,7 +11,7 @@
           placeholder="Add todo.."
         >
         <span class="input-group-btn">
-        <button class="btn btn-secondary">Add +</button>
+        <button class="btn btn-warning">Add +</button>
       </span>
       </div>
     </form>
@@ -20,39 +20,30 @@
 
     <h4>Pending todos</h4>
     <ul class="list-group">
-      <li
-        v-for="todo in pendingTodos"
-        class="list-group-item"
-      >
-        {{ todo.description }} - {{ todo.done ? 'done' : 'nope' }}
-        <button
-          v-on:click="toggle(todo)"
-          class="btn btn-sm btn-primary float-right">
-          toggle!
-        </button>
-      </li>
+      <todo v-for="todo in pendingTodos"
+            :description="todo.description"
+            :done="todo.done"
+            @onToggle="togglePending(todo)"
+      />
     </ul>
 
     <br>
 
     <h4>Completed todos</h4>
     <ul class="list-group">
-      <li
-        v-for="todo in completedTodos"
-        class="list-group-item"
-      >
-        {{ todo.description }} - {{ todo.done ? 'done' : 'nope' }}
-        <button
-          v-on:click="toggle(todo)"
-          class="btn btn-sm btn-primary float-right">
-          toggle!
-        </button>
-      </li>
+      <todo v-for="todo in completedTodos"
+            :description="todo.description"
+            :done="todo.done"
+            @onToggle="toggleCompleted(todo)"
+      />
     </ul>
+
   </div>
 </template>
 
 <script>
+  import Todo from './Todo'
+
   export default {
     data () {
       return {
@@ -77,7 +68,12 @@
     },
 
     methods: {
-      toggle (todo) {
+      togglePending (todo) {
+        console.log('pending')
+        todo.done = !todo.done
+      },
+      toggleCompleted (todo) {
+        console.log('completed')
         todo.done = !todo.done
       },
 
@@ -91,6 +87,10 @@
         })
         this.newTodo = ''
       }
+    },
+
+    components: {
+      Todo
     }
   }
 </script>
