@@ -3,18 +3,7 @@
     <br>
     <h3>Todo App</h3>
 
-    <form @submit.prevent="addTodo">
-      <div class="input-group">
-        <input
-          v-model="newTodo"
-          class="form-control"
-          placeholder="Add todo.."
-        >
-        <span class="input-group-btn">
-        <button class="btn btn-warning">Add +</button>
-      </span>
-      </div>
-    </form>
+    <add-todo @onAddTodo="addTodo" />
 
     <br>
 
@@ -43,6 +32,7 @@
 
 <script>
   import Todo from './Todo'
+  import AddTodo from './AddTodo'
 
   export default {
     data () {
@@ -77,20 +67,17 @@
         todo.done = !todo.done
       },
 
-      addTodo () {
-        if (!this.newTodo) {
-          return
-        }
+      addTodo (newTodo) {
         this.todos.push({
-          description: this.newTodo,
+          description: newTodo,
           done: false
         })
-        this.newTodo = ''
       }
     },
 
     components: {
-      Todo
+      Todo,
+      AddTodo
     }
   }
 </script>
