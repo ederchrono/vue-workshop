@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-
 import MovieCard from './MovieCard'
 import MovieNav from './MovieNav'
 import Pagination from './Pagination'
@@ -55,14 +53,27 @@ export default {
   },
 
   computed: {
-    ...mapState(['section', 'loading']),
-    ...mapGetters({
-      movies: 'movieCards'
-    })
+    section () {
+      return this.$store.state.section
+    },
+    loading () {
+      return this.$store.state.loading
+    },
+    movies () {
+      return this.$store.getters.movieCards
+    }
   },
 
   methods: {
-    ...mapActions(['fetchGenres', 'fetchMovies', 'fetchSavedMovies'])
+    fetchGenres () {
+      this.$store.dispatch('fetchGenres')
+    },
+    fetchMovies () {
+      this.$store.dispatch('fetchMovies')
+    },
+    fetchSavedMovies () {
+      this.$store.dispatch('fetchSavedMovies')
+    }
   }
 }
 </script>

@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-
 export default {
   data () {
     return {
@@ -30,17 +28,23 @@ export default {
   },
 
   computed: {
-    ...mapState(['genres', 'selectedGenre']),
-    ...mapGetters(['selectedGenreName']),
+    genres () {
+      return this.$store.state.genres
+    },
+    selectedGenre () {
+      return this.$store.state.selectedGenre
+    },
+    selectedGenreName () {
+      return this.$store.getters.selectedGenreName
+    },
     filterText () {
       return this.selectedGenreName || 'Viewing all genres'
     }
   },
 
   methods: {
-    ...mapActions(['filterByGenre']),
-    onFilterClick (genre) {
-      this.filterByGenre(genre)
+    onFilterClick (genreId) {
+      this.$store.dispatch('filterByGenre', genreId)
       this.open = false
     }
   }

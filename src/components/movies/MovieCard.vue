@@ -13,7 +13,7 @@
         <p class="card-text">{{description}}</p>
       </div>
 
-      <movie-vote-average :voteAverage="voteAverage"/>
+      <movie-card-vote-average :voteAverage="voteAverage"/>
 
       <a v-if="!saved" href="#" @click.prevent="saveMovie(movieObject)"
         class="btn btn-primary save-btn">
@@ -29,12 +29,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import MovieVoteAverage from './MovieVoteAverage'
+import MovieCardVoteAverage from './MovieCardVoteAverage'
 
 export default {
   components: {
-    MovieVoteAverage
+    MovieCardVoteAverage
   },
 
   data () {
@@ -86,11 +85,18 @@ export default {
         'image': this.image,
       }
     },
-    ...mapGetters(['savedMoviesIds'])
+    savedMoviesIds () {
+      return this.$store.getters.savedMoviesIds
+    }
   },
 
   methods: {
-    ...mapMutations(['saveMovie', 'removeSavedMovie'])
+    saveMovie (movieObject) {
+      this.$store.commit('saveMovie', movieObject)
+    },
+    removeSavedMovie (movieObject) {
+      this.$store.commit('removeSavedMovie', movieObject)
+    }
   }
 }
 </script>
