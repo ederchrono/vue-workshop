@@ -1,5 +1,10 @@
 <template>
   <li class="list-group-item">
+    <button
+      @click="remove"
+      class="btn btn-sm btn-danger"
+    >x
+    </button>
     {{ description }} - {{ done ? 'done' : 'nope' }}
     <button
       @click="toggle"
@@ -16,6 +21,10 @@
     methods: {
       toggle () {
         this.$emit('onToggle')
+      },
+
+      remove () {
+        this.$emit('onRemove')
       }
     }
   }

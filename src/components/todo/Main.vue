@@ -13,6 +13,7 @@
             :description="todo.description"
             :done="todo.done"
             @onToggle="togglePending(todo)"
+            @onRemove="remove(todo)"
       />
     </ul>
 
@@ -24,6 +25,7 @@
             :description="todo.description"
             :done="todo.done"
             @onToggle="toggleCompleted(todo)"
+            @onRemove="remove(todo)"
       />
     </ul>
 
@@ -72,6 +74,10 @@
           description: newTodo,
           done: false
         })
+      },
+
+      remove (todo) {
+        this.todos.splice(this.todos.indexOf(todo), 1)
       }
     },
 
