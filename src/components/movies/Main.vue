@@ -37,6 +37,9 @@ export default {
     MovieNav,
     Pagination,
     MovieFilter
+  },
+  mounted () {
+    console.log(this.$store.state)
   }
 }
 </script>
