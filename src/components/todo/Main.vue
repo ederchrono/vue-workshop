@@ -9,7 +9,8 @@
 
     <h4>Pending todos</h4>
     <ul class="list-group">
-      <todo v-for="todo in pendingTodos"
+      <todo v-for="todo, index in pendingTodos"
+            :key="index"
             :description="todo.description"
             :done="todo.done"
             @onToggle="togglePending(todo)"
@@ -21,7 +22,8 @@
 
     <h4>Completed todos</h4>
     <ul class="list-group">
-      <todo v-for="todo in completedTodos"
+      <todo v-for="todo, index in completedTodos"
+            :key="index"
             :description="todo.description"
             :done="todo.done"
             @onToggle="toggleCompleted(todo)"
