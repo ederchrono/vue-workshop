@@ -13,8 +13,14 @@
 
       <div class="row movie-container">
 
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-          <movie-card :id="1"/>
+        <div
+          v-for="movie in movies"
+          class="col-xs-12 col-sm-6 col-lg-3"
+        >
+          <movie-card
+            :key="movie.id"
+            v-bind="movie"
+          />
         </div>
 
       </div>
@@ -38,8 +44,21 @@ export default {
     Pagination,
     MovieFilter
   },
+
+  computed: {
+    movies () {
+      return this.$store.getters.movieCards
+    }
+  },
+
+  methods: {
+    fetchMovies () {
+      this.$store.dispatch('fetchMovies')
+    }
+  },
+
   mounted () {
-    console.log(this.$store.state)
+    this.fetchMovies()
   }
 }
 </script>

@@ -25,11 +25,6 @@ export default {
   data () {
     return {
       open: false,
-      genres: [
-        {name: 'Action', id: 1},
-        {name: 'Horror', id: 2},
-        {name: 'Comedy', id: 3},
-      ],
       selectedGenreName: null
     }
   },
@@ -37,14 +32,21 @@ export default {
   computed: {
     filterText () {
       return this.selectedGenreName || 'Viewing all genres'
+    },
+    genres () {
+      return this.$store.state.genres
     }
   },
 
   methods: {
     onFilterClick (genre) {
-      // TODO filter movies
+      this.$store.dispatch('filterByGenre', genre)
       this.open = false
     }
+  },
+
+  mounted () {
+    this.$store.dispatch('fetchGenres')
   }
 }
 </script>
