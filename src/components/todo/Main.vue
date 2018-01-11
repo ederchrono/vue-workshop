@@ -20,10 +20,11 @@
 
     <h4>Pending todos</h4>
     <ul class="list-group">
-      <todo v-for="todo in pendingTodos"
-            :description="todo.description"
-            :done="todo.done"
-            @onToggle="togglePending(todo)"
+      <todo v-for="(todo, index) in pendingTodos"
+        :key="index"
+        :description="todo.description"
+        :done="todo.done"
+        @onToggle="togglePending(todo)"
       />
     </ul>
 
@@ -31,10 +32,11 @@
 
     <h4>Completed todos</h4>
     <ul class="list-group">
-      <todo v-for="todo in completedTodos"
-            :description="todo.description"
-            :done="todo.done"
-            @onToggle="toggleCompleted(todo)"
+      <todo v-for="(todo, index) in completedTodos"
+        :key="index"
+        :description="todo.description"
+        :done="todo.done"
+        @onToggle="toggleCompleted(todo)"
       />
     </ul>
 
