@@ -9,7 +9,7 @@
 
     <h4>Pending todos</h4>
     <ul class="list-group">
-      <todo v-for="todo, index in pendingTodos"
+      <todo v-for="(todo, index) in pendingTodos"
             :key="index"
             :description="todo.description"
             :done="todo.done"
@@ -22,7 +22,7 @@
 
     <h4>Completed todos</h4>
     <ul class="list-group">
-      <todo v-for="todo, index in completedTodos"
+      <todo v-for="(todo, index) in completedTodos"
             :key="index"
             :description="todo.description"
             :done="todo.done"
