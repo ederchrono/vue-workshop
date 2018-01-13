@@ -14,9 +14,9 @@
       <div class="row movie-container">
 
         <div
-          v-for="movie in movies"
-          class="col-xs-12 col-sm-6 col-lg-3"
-        >
+          v-for="(movie, index) in movies"
+          :key="index"
+          class="col-xs-12 col-sm-6 col-lg-3">
           <movie-card
             :key="movie.id"
             v-bind="movie"
