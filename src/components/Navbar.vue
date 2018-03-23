@@ -1,6 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">My first Vue app</a>
+    <router-link class="navbar-brand" to="/">
+      My first Vue app
+    </router-link>
 
     <button class="navbar-toggler" @click="collapse=!collapse" type="button">
       <span class="navbar-toggler-icon"></span>

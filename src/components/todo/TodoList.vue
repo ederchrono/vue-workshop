@@ -6,7 +6,9 @@
         <button @click="remove(item)" class="btn btn-sm btn-danger">
           x
         </button>
-        {{ item.description }} - {{item.isDone ? 'completed' : 'pending'}}
+        <span>
+          {{ item.description }} - {{item.isDone ? 'completed' : 'pending'}}
+        </span>
         <button v-on:click="toggle(item)"
           class="btn-btn-sm btn-primary float-right">
           toggle

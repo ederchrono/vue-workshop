@@ -32,14 +32,9 @@
 </template>
 
 <script>
-export default {
+import {mapActions, mapState} from 'vuex'
 
-  data () {
-    return {
-      currentPage: 1,
-      pages: 5
-    }
-  },
+export default {
 
   props: {
     maxNumberOfPages: {
@@ -49,6 +44,10 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      currentPage: (state) => state.currentPage,
+      pages: (state) => state.totalPages
+    }),
     shouldShow () {
       return this.pages > 1
     },
@@ -73,12 +72,15 @@ export default {
 
   methods: {
     clickedPage (page) {
-      // TODO change and retrieve page of movies
+      this.fetchPage(page)
       this.scrollToTop()
     },
     scrollToTop () {
       window.scrollTo(0, 0)
-    }
+    },
+    ...mapActions({
+      fetchPage: 'fetchPage'
+    })
   }
 }
 </script>

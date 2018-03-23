@@ -24,27 +24,31 @@
 export default {
   data () {
     return {
-      open: false,
-      genres: [
-        {name: 'Action', id: 1},
-        {name: 'Horror', id: 2},
-        {name: 'Comedy', id: 3},
-      ],
-      selectedGenreName: null
+      open: false
     }
   },
 
   computed: {
     filterText () {
       return this.selectedGenreName || 'Viewing all genres'
+    },
+    genres() {
+      return this.$store.state.genres
+    },
+    selectedGenreName () {
+      return this.$store.getters.selectedGenreName
     }
   },
 
   methods: {
-    onFilterClick (genre) {
-      // TODO filter movies
+    onFilterClick (genreId) {
+      this.$store.dispatch('filterMovies', genreId)
       this.open = false
     }
+  },
+
+  mounted () {
+    this.$store.dispatch('fetchGenres')
   }
 }
 </script>

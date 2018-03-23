@@ -31,12 +31,11 @@
 </template>
 
 <script>
-import TodoList from './TodoList'
+// import TodoList from './TodoList'
 import TodoForm from './TodoForm'
 
 export default {
   components: {
-    TodoList,
     TodoForm
   },
 
