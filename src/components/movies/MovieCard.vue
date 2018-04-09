@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-card">
+  <router-link :to="`/movies/${id}`" class="movie-card">
     <img class="card-img-top"
       @error="imageError = true"
       :src="workingImage">
@@ -25,7 +25,7 @@
       </a>
 
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -100,6 +100,7 @@ export default {
 
 <style scoped>
 .movie-card {
+  display: block;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -107,6 +108,7 @@ export default {
   color: white;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 .movie-card-saved-icon {
   width: 30px;
