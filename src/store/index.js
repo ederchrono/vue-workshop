@@ -3,6 +3,17 @@ import Vuex from 'vuex'
 import MovieService from '../services/MovieService'
 Vue.use(Vuex)
 
+function shapeMovie(movie) {
+  const imageBasePath = 'http://image.tmdb.org/t/p/w370_and_h556_bestv2'
+  return ({
+    id: movie.id,
+    image: `${imageBasePath}${movie.poster_path}`,
+    title: movie.title,
+    description: movie.overview,
+    voteAverage: movie.vote_average
+  })
+}
+
 const store = {
   state: {
     hello: 'world',
@@ -11,6 +22,8 @@ const store = {
     genres: [],
     selectedGenre: null,
     loading: false,
+    movieRequested: false,
+    movieDetails: {},
     currentPage: 1,
     totalPages: 0
   },
@@ -28,6 +41,10 @@ const store = {
     async fetchGenres (context) {
       const genreData = await MovieService.getGenres()
       context.commit('setGenres', genreData.data)
+    },
+    async getSingleMovie(context, movieId) {
+      const { data } = await MovieService.getSingleMovie(movieId)
+      context.commit('singleMovieFetched', data)
     },
     filterMovies (context, genreId) {
       context.commit('setGenre', genreId)
@@ -48,9 +65,7 @@ const store = {
       const savedMoviesJson = localStorage.getItem('savedMovies')
       let savedMovies = []
       try {
-        console.log(savedMoviesJson)
         savedMovies = JSON.parse(savedMoviesJson)
-        console.log(savedMovies)
       } catch (error) {
         console.log(error)
       }
@@ -76,6 +91,9 @@ const store = {
     saveMovie (state, movie) {
       state.savedMovies.push(movie)
     },
+    singleMovieFetched(state, data) {
+      state.movieDetails = shapeMovie(data)
+    },
     removeMovie (state, removedMovie) {
       state.savedMovies = state.savedMovies
         .filter(movie => movie.id !== removedMovie.id)
@@ -91,14 +109,7 @@ const store = {
 
   getters: {
     movieCards (state) {
-      const imageBasePath = 'http://image.tmdb.org/t/p/w370_and_h556_bestv2'
-      return state.movies.map(movie => ({
-        id: movie.id,
-        image: `${imageBasePath}${movie.poster_path}`,
-        title: movie.title,
-        description: movie.overview,
-        voteAverage: movie.vote_average
-      }))
+      return state.movies.map(shapeMovie);
     },
     selectedGenreName (state) {
       const genre = state.genres
