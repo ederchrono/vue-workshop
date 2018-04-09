@@ -1,23 +1,26 @@
 <template>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a :class="{'nav-link':true, 'active': section==='discover'}"
-        href="#" @click.prevent="clicked('discover')">
+      <router-link :class="{'nav-link':true, 'active': !isBacklog}"
+        to="/movies" @click.prevent="clicked('discover')">
         Discover
-      </a>
+      </router-link>
     </li>
 
     <li class="nav-item">
-      <a :class="{'nav-link':true, 'active': section==='backlog'}"
-        href="#" @click.prevent="clicked('backlog')">
+      <router-link :class="{'nav-link':true, 'active': isBacklog}"
+        to="/movies/backlog" @click.prevent="clicked('backlog')">
         Backlog
-      </a>
+      </router-link>
     </li>
   </ul>
 </template>
 
 <script>
+import isBacklogMixin from '../../mixins/isBacklogMixin'
+
 export default {
+  mixins: [isBacklogMixin],
   data () {
     return {
       section: 'discover'

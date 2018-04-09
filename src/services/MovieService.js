@@ -26,5 +26,11 @@ export default {
     let query = '/genre/movie/list'
     const request = `${url}${query}?api_key=${key}`
     return axios.get(request)
+  },
+
+  getSingleMovie(id) {
+    const query = `movie/${id}`
+    const request = `${url}/${query}?api_key=${key}`
+    return axios.get(request);
   }
 }

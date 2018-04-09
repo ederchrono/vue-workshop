@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-card">
+  <router-link :to="`/movies/${id}`" class="movie-card">
     <img class="card-img-top"
       @error="imageError = true"
       :src="workingImage">
@@ -13,23 +13,24 @@
         <p class="card-text">{{description}}</p>
       </div>
 
-      <movie-vote-average :voteAverage="voteAverage"/>
+      <movie-card-vote-average :voteAverage="voteAverage"/>
 
       <a v-if="!saved" href="#" @click.prevent="saveMovie(movieObject)"
         class="btn btn-primary save-btn">
         Add to backlog
       </a>
-      <a v-else href="#" @click.prevent="removeSavedMovie(movieObject)"
+      <a v-else href="#" @click.prevent="removeMovie(movieObject)"
         class="btn btn-danger save-btn">
         Remove
       </a>
 
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 import MovieCardVoteAverage from './MovieCardVoteAverage'
+import {mapActions} from 'vuex'
 
 export default {
   components: {
@@ -74,8 +75,8 @@ export default {
       return this.image
     },
     saved () {
-      // TODO check if movie is saved
-      return false
+      const savedMovies = this.$store.state.savedMovies
+      return savedMovies.some(movie => movie.id === this.id)
     },
     movieObject () {
       // We don't save vote_average because it may change
@@ -89,18 +90,17 @@ export default {
   },
 
   methods: {
-    saveMovie () {
-      // TODO add movie to saved
-    },
-    removeSavedMovie (movieObject) {
-      // TODO remove saved movie
-    }
+    ...mapActions({
+      saveMovie: 'saveMovie',
+      removeMovie: 'removeMovie'
+    })
   }
 }
 </script>
 
 <style scoped>
 .movie-card {
+  display: block;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -108,6 +108,7 @@ export default {
   color: white;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 .movie-card-saved-icon {
   width: 30px;

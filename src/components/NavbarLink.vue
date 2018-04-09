@@ -1,5 +1,5 @@
 <template>
-  <li :class="{'nav-item': true, 'active': currentRoute===to}">
+  <li class="nav-item" :class="{'active': isCurrentPage}">
     <router-link class="nav-link" :to="to">
       {{label}}
     </router-link>
@@ -18,10 +18,9 @@ export default {
       required: true
     }
   },
-
   computed: {
-    currentRoute () {
-      return this.$route.path
+    isCurrentPage() {
+      return this.$route.path === this.to
     }
   }
 }
